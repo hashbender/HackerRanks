@@ -1,32 +1,35 @@
 package com.nick.algorithms.sorting;
+
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class InsertionSortPart2 {
-
-	public InsertionSortPart2() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public static void insertionSortPart2(int[] ar) {
 		IntStream.range(1, ar.length).forEach(in -> {
 			printArray(sortSub(ar, in));
 		});
 	}
-	static public int[] sortSub(int[] ar, int endIndex){
-		if (endIndex == 0) return ar;
+
+	static public int[] sortSub(int[] ar, int endIndex) {
+		if (endIndex == 0)
+			return ar;
 		int end = endIndex;
 		int insertVal = ar[end];
-		end --;
+		end--;
 		boolean swapped = false;
-		while (insertVal < ar[end]){
+		while (insertVal < ar[end]) {
 			if (end - 1 < 0) {
 				ar[end + 1] = ar[end];
 				ar[end] = insertVal;
 				swapped = true;
 				break;
 			}
-			ar[end+1] = ar[end];
+			ar[end + 1] = ar[end];
 			end--;
 		}
 		if (!swapped)

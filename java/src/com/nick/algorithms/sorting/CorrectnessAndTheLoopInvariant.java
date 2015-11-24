@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author nick.hansen
  *
  */
-public class InsertionSortFix {
+public class CorrectnessAndTheLoopInvariant {
 
 	public static void insertionSort(int[] A) {
 		for (int i = 1; i < A.length; i++) {
@@ -18,7 +18,6 @@ public class InsertionSortFix {
 				j = j - 1;
 			}
 			A[j + 1] = value;
-			printArray(A);
 		}
 
 		printArray(A);
@@ -28,7 +27,6 @@ public class InsertionSortFix {
 		for (int n : ar) {
 			System.out.print(n + " ");
 		}
-		System.out.println();
 	}
 
 	public static void main(String[] args) {
@@ -38,7 +36,6 @@ public class InsertionSortFix {
 		for (int i = 0; i < n; i++) {
 			ar[i] = in.nextInt();
 		}
-		in.close();
 		insertionSort(ar);
 	}
 }

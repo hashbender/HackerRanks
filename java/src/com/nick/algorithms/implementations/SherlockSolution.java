@@ -37,23 +37,16 @@ import java.util.List;
  * 
  * Sample Input
  * 
- * 4 
- * 1 
- * 3 
- * 5 
- * 11 
+ * 4 1 3 5 11
  * 
  * Sample Output
  * 
- * -1 
- * 555 
- * 33333 
- * 55555533333 
+ * -1 555 33333 55555533333
  * 
- * Explanation For N=1, there is no such number. For
- * N=3, 555 is the only possible number. For N=5, 33333 is the only possible
- * number. For N=11, 55555533333 and all permutations of these digits are valid
- * numbers; among them, the given number is the largest one.
+ * Explanation For N=1, there is no such number. For N=3, 555 is the only
+ * possible number. For N=5, 33333 is the only possible number. For N=11,
+ * 55555533333 and all permutations of these digits are valid numbers; among
+ * them, the given number is the largest one.
  * 
  * @author nick.hansen
  *
@@ -80,32 +73,31 @@ public class SherlockSolution {
 		}
 		System.out.println("-1");
 	}
-	
-	public static boolean isDecent(Long s){
+
+	public static boolean isDecent(Long s) {
 		String inString = s.toString();
 		Integer threes = inString.replace("5", "").length();
-		if (threes % 5 != 0){
+		if (threes % 5 != 0) {
 			return false;
 		}
 		Integer fives = inString.replace("3", "").length();
-		if (fives % 3 != 0){
+		if (fives % 3 != 0) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public static void permute(List<Long> list, String string,
 			List<String> toPermute, int len) {
 		if (string.length() == len) {
 			list.add(Long.parseLong(string));
 			return;
 		}
-			for (String s : toPermute)
-				permute(list, string + s, toPermute, len);
+		for (String s : toPermute)
+			permute(list, string + s, toPermute, len);
 	}
-	
-	
+
 	/* Tail starts here */
 	public static void main(String[] args) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

@@ -1,5 +1,10 @@
 package com.nick.algorithms.graphtheory;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class ShortestReach {
 
 	public ShortestReach() {

@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class AngryProfessorSolution {
 
-	
 	public static void solveClassProblem(int minNumberStudents,
 			int[] arrivalTimes) {
 
@@ -22,20 +26,16 @@ public class AngryProfessorSolution {
 		}
 		System.out.println("YES");
 	}
-	
-	
-		
-	
+
 	/* Tail starts here */
 	public static void main(String[] args) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		try {
 			br.readLine();
 			String line;
 			while ((line = br.readLine()) != null && line.length() > 0) {
-				int minNumStudents = Integer
-						.parseInt(line.split(" ")[1]);
+				int minNumStudents = Integer.parseInt(line.split(" ")[1]);
 
 				int[] ints = Arrays.stream(br.readLine().split(" "))
 						.mapToInt(n -> Integer.parseInt(n)).toArray();

@@ -4,26 +4,31 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class ChocolateFeast {
 
-	public static void solveChocolateFeast(int int1, int int2, int wrapperCost){
-		int candy = int1/int2;
+	public static void solveChocolateFeast(int int1, int int2, int wrapperCost) {
+		int candy = int1 / int2;
 		int wrappers = candy;
-		candy+=recurseWrappers(0, wrappers, wrapperCost);
+		candy += recurseWrappers(0, wrappers, wrapperCost);
 		System.out.println(candy);
 	}
-	
+
 	public static int recurseWrappers(int candy, int wrappers, int wrapperCost) {
 		if (wrappers < wrapperCost)
 			return candy;
-		int newCandy = wrappers/wrapperCost;
+		int newCandy = wrappers / wrapperCost;
 		int leftOverWrappers = wrappers % wrapperCost;
-		
+
 		candy += newCandy;
 		wrappers = newCandy + leftOverWrappers;
 		return recurseWrappers(candy, wrappers, wrapperCost);
 	}
-	
+
 	/* Tail starts here */
 	public static void main(String[] args) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

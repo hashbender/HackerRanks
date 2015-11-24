@@ -4,10 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class CutTheSticks {
 
-
-	public static void solveCutTheSticks(int[] array){
+	public static void solveCutTheSticks(int[] array) {
 		boolean hasCuts = true;
 		while (hasCuts) {
 			int min = Integer.MAX_VALUE;
@@ -20,7 +24,7 @@ public class CutTheSticks {
 			for (int i = 0; i < array.length; i++) {
 				if (array[i] > 0) {
 					foundCuts = true;
-					numCuts ++;
+					numCuts++;
 					array[i] -= min;
 				}
 			}

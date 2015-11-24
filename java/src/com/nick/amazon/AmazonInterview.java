@@ -72,58 +72,71 @@ public class AmazonInterview {
 	 * 
 	 * @param secondEmployee - one of the two target employees, guaranteed to
 	 * report up to the CEO
-	 *
+	 * 
 	 * @return the employee which is the closest common manager of firstEmployee
 	 * and secondEmployee
-	 *
+	 * 
 	 * Assumptions I made: I assumed that there were no "dangling" employees
-	 * Description of my approach: My approach was to recursively build a hierarchy for the given employee with the findEmployeeChain function.  I would do this with 
-	 * both employees and then be able to find where the lists converge. 
+	 * Description of my approach: My approach was to recursively build a
+	 * hierarchy for the given employee with the findEmployeeChain function. I
+	 * would do this with both employees and then be able to find where the
+	 * lists converge.
 	 * 
-	 * Runtime complexity of my approach: This has a  O(log(n))) complexity
+	 * Runtime complexity of my approach: This has a O(log(n))) complexity
 	 * 
-	 * Justification of runtime complexity: This algorithm (if it worked) will only need to look through, on average, half of each managers direct reports.  As this extrapolates,
-	 * the complexity approaches O(log(n))
+	 * Justification of runtime complexity: This algorithm (if it worked) will
+	 * only need to look through, on average, half of each managers direct
+	 * reports. As this extrapolates, the complexity approaches O(log(n))
 	 */
-	static Employee closestCommonManager(Employee ceo, Employee firstEmployee, Employee secondEmployee) {
+	static Employee closestCommonManager(Employee ceo, Employee firstEmployee,
+			Employee secondEmployee) {
 		List<Employee> firstManagementChain = new ArrayList<Employee>();
-		List<Employee> chain1 = findEmployeeChain(ceo, firstEmployee, firstManagementChain);
-		
-		List<Employee> secondManagementChain = new ArrayList<Employee>();
-		List<Employee> chain2 = findEmployeeChain(ceo, secondEmployee, secondManagementChain);
+		List<Employee> chain1 = findEmployeeChain(ceo, firstEmployee,
+				firstManagementChain);
 
-		if (chain1.size() > chain2.size()){
+		List<Employee> secondManagementChain = new ArrayList<Employee>();
+		List<Employee> chain2 = findEmployeeChain(ceo, secondEmployee,
+				secondManagementChain);
+
+		if (chain1.size() > chain2.size()) {
 			return chain2.get(chain2.size() - 1);
 		} else {
 			return chain1.get(chain1.size() - 1);
 		}
 	}
-	
-	static List<Employee> findEmployeeChain(Employee manager, Employee findEmployee, List<Employee> managementChain) {
+
+	static List<Employee> findEmployeeChain(Employee manager,
+			Employee findEmployee, List<Employee> managementChain) {
 		managementChain.add(manager);
 		if (manager.getReports().contains(findEmployee)) {
 			return managementChain;
 		} else {
 			for (Employee report : manager.getReports()) {
-				List<Employee> tempList = findEmployeeChain(report, findEmployee, managementChain);
-				if (tempList.size() > 0) return tempList;
+				List<Employee> tempList = findEmployeeChain(report,
+						findEmployee, managementChain);
+				if (tempList.size() > 0)
+					return tempList;
 			}
 		}
 		managementChain.remove(manager);
 		return new ArrayList<>();
 	}
-	
+
 	/**
-	 * This is wrong, and where I spend most of my time before determining that I just need to build the chain, not the entire map.  
-	 * This function will map a manager to his/her direct reports. I was just mapping to the employee name for debugging purposes, but would
-	 * have eventually mapped to employee ID for uniqueness;
+	 * This is wrong, and where I spend most of my time before determining that
+	 * I just need to build the chain, not the entire map. This function will
+	 * map a manager to his/her direct reports. I was just mapping to the
+	 * employee name for debugging purposes, but would have eventually mapped to
+	 * employee ID for uniqueness;
+	 * 
 	 * @param mapToEmployeeb
 	 * @param employeeMap
 	 * @param employee
 	 * @return
 	 */
-	static Map<String, List<Employee>> fillOutMap(Map<String, List<Employee>> mapToEmployee, List<Employee> employeeMap,
-			Employee employee) {
+	static Map<String, List<Employee>> fillOutMap(
+			Map<String, List<Employee>> mapToEmployee,
+			List<Employee> employeeMap, Employee employee) {
 		for (Employee report : employee.getReports()) {
 			if (report.getReports().isEmpty()) {
 				mapToEmployee.put(report.getName(), employeeMap);
@@ -133,7 +146,7 @@ public class AmazonInterview {
 		}
 		return mapToEmployee;
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 
 		final Map<Integer, Employee> employeeMap = new HashMap<Integer, Employee>();
@@ -143,9 +156,9 @@ public class AmazonInterview {
 		while (in.hasNextLine()) {
 
 			final String type = in.next();
-			if (type.equals("end")) break;
-			
-			
+			if (type.equals("end"))
+				break;
+
 			if (type.equals("employee")) {
 				final int id = in.nextInt();
 				final String name = in.next();
@@ -163,8 +176,11 @@ public class AmazonInterview {
 			}
 		}
 
-		final Employee result = closestCommonManager(ceo, firstEmployee, secondEmployee);
+		final Employee result = closestCommonManager(ceo, firstEmployee,
+				secondEmployee);
 
-		System.out.println("result " + (result == null ? "<null>" : result.getId() + " " + result.getName()));
+		System.out.println("result "
+				+ (result == null ? "<null>" : result.getId() + " "
+						+ result.getName()));
 	}
 }

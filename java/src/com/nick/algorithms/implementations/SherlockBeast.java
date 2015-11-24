@@ -4,12 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class SherlockBeast {
 
 	static void solveSherlockProblem(int in) {
 		int tempIn = in;
 		StringBuilder builder = new StringBuilder();
-		while(tempIn > 0){
+		while (tempIn > 0) {
 			if (tempIn % 3 == 0)
 				break;
 			tempIn -= 5;
@@ -26,7 +31,7 @@ public class SherlockBeast {
 		assert s.length() == in;
 		System.out.println(s);
 	}
-	
+
 	/* Tail starts here */
 	public static void main(String[] args) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

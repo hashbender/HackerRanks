@@ -4,16 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 
+ * @author nick.hansen
+ *
+ */
 public class ServiceLane {
 
 	public ServiceLane() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public static void solveServiceLane(int[] array, int index1, int index2){
+
+	public static void solveServiceLane(int[] array, int index1, int index2) {
 		int min = 3;
-		for (int i = index1; i <= index2; i++){
-			if (min > array[i]) min = array[i];
+		for (int i = index1; i <= index2; i++) {
+			if (min > array[i])
+				min = array[i];
 		}
 		System.out.println(min);
 	}
