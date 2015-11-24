@@ -1,4 +1,4 @@
-package com.nick.insertionsort;
+package com.nick.algorithms.sorting;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 

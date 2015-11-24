@@ -1,35 +1,33 @@
-package com.nick.insertionsort;
-
+package com.nick.algorithms.sorting;
 import java.util.Scanner;
 
-public class InsertionSourtCounter {
+public class InsertionSortFix {
 
-	public InsertionSourtCounter() {
+	public InsertionSortFix() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static int insertionSort(int[] A){
-        int moves = 0;
+    public static void insertionSort(int[] A){
         for(int i = 1; i < A.length; i++){
             int value = A[i];
             int j = i - 1;
             while(j >= 0 && A[j] > value){
-            	moves++;
                 A[j + 1] = A[j];
                 j = j - 1;
             }
             A[j + 1] = value;
+            printArray(A);
         }
-        System.out.println(moves);
-        return moves;
-	}
-	
+
+        printArray(A);
+    }
 
 
     static void printArray(int[] ar) {
         for(int n: ar){
             System.out.print(n+" ");
         }
+        System.out.println();
     }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

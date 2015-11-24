@@ -1,4 +1,4 @@
-package com.nick.insertionsort;
+package com.nick.algorithms.sorting;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

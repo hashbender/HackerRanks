@@ -1,4 +1,4 @@
-package com.nick.quicksort;
+package com.nick.algorithms.sorting;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.nickh.implementation;
+package com.nick.algorithms.implementations;
 
 import java.io.BufferedReader;
 import java.io.IOException;
