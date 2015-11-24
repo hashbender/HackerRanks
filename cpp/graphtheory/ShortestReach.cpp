@@ -13,12 +13,22 @@ using namespace std;
 
 class Graph {
 public:
-    Graph(int numNodes, int numEdges) { this->numNodes = numNodes; this->numEdges = numEdges;};
+    Graph(int numNodes, int numEdges) {this->numNodes = numNodes;  this->numEdges = numEdges;};
     ~Graph() {};
     
     string getShortestDistances (int startingNode) {
         string distances;
         vector<int> distanceList(numNodes, -1);
+        
+         map<int, list<int> >::iterator curNode = graphMap.begin();
+ 
+        // Remove duplicate edges
+        while(curNode != graphMap.end()) {
+            curNode->second.sort();
+            curNode->second.unique();
+            
+            curNode++;
+        }
         
         //cout << "Calculating distances from " << startingNode << endl;
         
@@ -53,6 +63,26 @@ public:
         //cout << "Added edge from " << a << " to " << b << endl;
     };
     
+    void print() {
+        map<int, list<int> >::iterator curNode = graphMap.begin();
+        
+        cout << endl << endl;
+        cout << "Graph Map: " << endl << endl;
+        
+        while(curNode != graphMap.end()) {
+            cout << curNode->first << ": ";
+            list<int>::iterator curNeighbor = curNode->second.begin();
+            
+            while(curNeighbor != curNode->second.end()) {
+                cout << *curNeighbor << " ";
+                curNeighbor++;
+            }
+            
+            cout << endl << endl;
+            curNode++;
+        }
+    }
+    
 private:
     int numNodes;
     int numEdges;
@@ -60,45 +90,62 @@ private:
     map<int, list<int> > graphMap;
     
     void calcDistances(int startingNode, vector<int> &distanceList) {
-        vector<bool> visited(numNodes, false);
-        
-        visited[startingNode-1] = true;
+        map<int, list<int> > depthMap;
         distanceList[startingNode-1] = 0;
         
-        recurseNode(startingNode, 1, visited, distanceList);
+        depthMap[0].push_front(startingNode);
+        
+        int numNodesFound = 1;
+        recurseNode(depthMap, 0, distanceList, numNodesFound);
     }
     
     
-    void recurseNode(int node, int depth, vector<bool> &visited, vector<int> &distanceList) {
-        list<int>::iterator foundNode = graphMap[node].begin();
+    void recurseNode(map<int, list<int> > &depthMap, int depth, 
+                     vector<int> &distanceList, int &numNodesFound) {      
+        // For each node at this depth
+        list<int>::iterator curDepthNode = depthMap[depth].begin();
+        while (curDepthNode != depthMap[depth].end()) {
         
-         //cout << "Recursing " << node << endl;
+            // For each neighbor connected to this node
+            list<int>::iterator nodeNeighbor = graphMap[*curDepthNode].begin();
+            while(nodeNeighbor != graphMap[*curDepthNode].end()) {
+                //cout << "Found " << *foundNode << " from " << node << endl;
+                if (nodeFound(*nodeNeighbor, depth+1, distanceList)) {
+                    // If this is a new node, add it to the list of nodes to process, 
+                    // since we want the shortest distance, we only need to process new 
+                    // nodes that we've encountered
+                    depthMap[depth+1].push_back(*nodeNeighbor);
+                    numNodesFound++;
+                }
         
-        // Iterate through connected nodes
-        while(foundNode != graphMap[node].end()) {
-            //cout << "Found " << *foundNode << " from " << node << endl;
-            nodeFound(*foundNode, depth, distanceList);
-        
-            // We want to avoid cyclic recursion in the graph, so if a node is already marked as visted ignore it
-            if (!visited[*foundNode - 1]) {
-                visited[*foundNode - 1] = true;
-                
-                // Each level of recursion increments the depth
-                recurseNode(*foundNode, depth+1, visited, distanceList);
+                nodeNeighbor++;
             }
             
-            foundNode++;
+            // We've looked at all the node neighbors
+            curDepthNode++;
         }
+        
+        // We've looked at all the nodes at the current depth
+        
+        // If we have not yet found all the nodes in the graph, recurse to the next level
+        if (numNodesFound != numNodes &&
+           !depthMap[depth+1].empty()) {
+            recurseNode(depthMap, depth+1, distanceList, numNodesFound);
+        }  
     }
     
     
-    void nodeFound(int node, int depth, vector<int> &distanceList) {
-        if (distanceList[node - 1] == -1 || 
-            depth < distanceList[node - 1]) {
+    bool nodeFound(int node, int depth, vector<int> &distanceList) {
+        if (distanceList[node - 1] == -1) {
             distanceList[node - 1] = depth;
-            //cout << "Updated Node: " << node << " Depth: " << depth << endl;
+
+           return true;
         }
+        
+        return false;
     }
+    
+    
 };
 
 
@@ -129,6 +176,8 @@ int main() {
         cin >> startingNode;
         
         cout << graph->getShortestDistances(startingNode) << endl;
+       
+        //graph->print();
         
         delete graph;
     }
